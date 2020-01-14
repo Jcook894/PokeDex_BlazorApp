@@ -1,0 +1,90 @@
+﻿@page "/"
+@using TestBlazorApp.Data
+@inject PokeApiService PokeApiService
+
+<h1>Poke Dex Application</h1>
+
+<p>Application made using Blazor</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-body" style="text-align: center;">
+                    <img src="@(@showingShiny == true ? @pkmnShinySprite: @pkmnSprite)"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <span>
+                <label>
+                    Pokemon Name: 
+                </label>
+                <p>@pkmnName</p>
+            </span>
+            <span>
+                <label>
+                    Dex Entry:
+                </label>
+                <p>@dexEntry</p>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <!--
+            Input value is binded on emptyStr parameter. 
+            When user types and clicks enter, value shows above.
+        -->
+        <div class="col-md">
+            <input type="text" class="form-control" @bind="@currentPkmn"/>
+        </div>
+         <div class="col-md">
+            <button class="btn btn-primary" @onclick="GetPokeData">Find Pokemon</button>
+            @if(@currentPkmn != "")
+            {
+                <button 
+                    class="btn btn-success" 
+                    @onclick="ShowShinySprite">
+                    Show Shiny @currentPkmn 
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+
+@code{
+    //TODO:
+    //Figure out better ways to set up global vars on component.
+    [Parameter]
+    public string pkmnName {get; set;} = "";
+    [Parameter]
+    public string currentPkmn {get; set;} = "";
+    [Parameter] 
+    public int dexEntry {get; set;}
+    [Parameter]
+    public string pkmnSprite {get; set;} = "";
+    [Parameter]
+    public string pkmnShinySprite {get; set;} = "";
+    [Parameter]
+    public bool showingShiny {get; set;} = false;
+    //TODO:
+    //Look into diff life cycle hooks.
+
+    protected async Task GetPokeData()
+    {
+         PokeData pkmnData =  await PokeApiService.GetPokemonData(currentPkmn);
+        //Pass service data into view.
+        showingShiny = false;
+        pkmnName = pkmnData.Name; 
+        dexEntry = pkmnData.DexEntry;
+        pkmnSprite = pkmnData.PkmnSprite;
+        pkmnShinySprite = pkmnData.PkmnShinySprite;
+    }
+
+    protected void ShowShinySprite()
+    {
+        showingShiny = true;
+    }
+
+}
