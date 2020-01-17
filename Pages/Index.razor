@@ -11,6 +11,7 @@
         <div class="col-md">
             <div class="card">
                 <div class="card-body" style="text-align: center;">
+                    <!-- Change sprite -->
                     <img src="@(@showingShiny == true ? @pkmnShinySprite: @pkmnSprite)"/>
                 </div>
             </div>
@@ -68,12 +69,13 @@
     public string pkmnShinySprite {get; set;} = "";
     [Parameter]
     public bool showingShiny {get; set;} = false;
+
     //TODO:
     //Look into diff life cycle hooks.
-
     protected async Task GetPokeData()
     {
          PokeData pkmnData =  await PokeApiService.GetPokemonData(currentPkmn);
+
         //Pass service data into view.
         showingShiny = false;
         pkmnName = pkmnData.Name; 

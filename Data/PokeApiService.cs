@@ -17,7 +17,8 @@ namespace TestBlazorApp.Data
                 DexEntry = pkmn.Id,
                 Name = pkmn.Name,
                 PkmnSprite = pkmn.Sprites.FrontDefault,
-                PkmnShinySprite = pkmn.Sprites.FrontShiny
+                PkmnShinySprite = pkmn.Sprites.FrontShiny,
+
             };
 
             return pokeData;
