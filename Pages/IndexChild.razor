@@ -1,0 +1,12 @@
+<p>I am a nested component, value below is passed from parent component</p>
+<p>@Title</p>
+@ChildContent
+
+@code
+{
+    [Parameter]
+    public string Title {get; set;}
+    [Parameter]
+    public RenderFragment ChildContent {get; set;}
+    
+}

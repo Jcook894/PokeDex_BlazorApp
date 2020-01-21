@@ -52,7 +52,7 @@
         </div>
     </div>
 </div>
-
+<IndexChild Title="PassedValue"></IndexChild>
 
 @code{
     //TODO:
@@ -69,6 +69,8 @@
     public string pkmnShinySprite {get; set;} = "";
     [Parameter]
     public bool showingShiny {get; set;} = false;
+    [Parameter]
+    public RenderFragment ChildContent {get; set;}
 
     //TODO:
     //Look into diff life cycle hooks.
