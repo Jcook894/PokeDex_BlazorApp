@@ -1,11 +1,24 @@
-<p>I am a nested component, value below is passed from parent component</p>
+@using PokeApiNet.Models
+
+<p>I am a nested component, value below is passed from parent component above</p>
 <p>@Title</p>
+
 @ChildContent
+
+@if(@PokemonDesc != null )
+{
+    @foreach(var desc in @PokemonDesc)
+    {
+        <p>@desc.Language</p>
+    }
+}
 
 @code
 {
     [Parameter]
     public string Title {get; set;}
+    [Parameter]
+    public List<Descriptions> PokemonDesc {get; set;}
     [Parameter]
     public RenderFragment ChildContent {get; set;}
     

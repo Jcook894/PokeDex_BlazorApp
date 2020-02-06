@@ -1,11 +1,18 @@
 ﻿@page "/"
 @using TestBlazorApp.Data
+@using PokeApiNet.Models
 @inject PokeApiService PokeApiService
 
 <h1>Poke Dex Application</h1>
 
 <p>Application made using Blazor</p>
 
+
+@if(currentPkmn == ""){
+    <p>Loading PokeDex.....</p>
+} else{
+
+}
 <div class="container">
     <div class="row">
         <div class="col-md">
@@ -52,7 +59,11 @@
         </div>
     </div>
 </div>
-<IndexChild Title="PassedValue"></IndexChild>
+<!-- Nested Child component -->
+<IndexChild 
+    Title="@currentPkmn"
+    PokemonDesc="@pkmnInfo"
+/>
 
 @code{
     //TODO:
@@ -70,20 +81,28 @@
     [Parameter]
     public bool showingShiny {get; set;} = false;
     [Parameter]
+    public List<Descriptions> pkmnInfo {get; set;}
+    [Parameter]
     public RenderFragment ChildContent {get; set;}
 
     //TODO:
     //Look into diff life cycle hooks.
+    protected override async Task OnInitializedAsync()
+    {
+        currentPkmn = "squirtle";
+        await GetPokeData();
+    }
+
     protected async Task GetPokeData()
     {
-         PokeData pkmnData =  await PokeApiService.GetPokemonData(currentPkmn);
-
+        var pkmnData =  await PokeApiService.GetPokemonData(currentPkmn);
         //Pass service data into view.
         showingShiny = false;
         pkmnName = pkmnData.Name; 
         dexEntry = pkmnData.DexEntry;
         pkmnSprite = pkmnData.PkmnSprite;
         pkmnShinySprite = pkmnData.PkmnShinySprite;
+        pkmnInfo = pkmnData.PkmnDesc;
     }
 
     protected void ShowShinySprite()

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using PokeApiNet.Models;
 
-namespace TestBlazorApp.Data
+namespace TestBlazorApp.Models
 {
     public class PokeData
     {
@@ -11,5 +9,6 @@ namespace TestBlazorApp.Data
         public int DexEntry { get; set; }
         public string PkmnSprite {get; set;}
         public string PkmnShinySprite {get; set;}
+        public List<Descriptions> PkmnDesc {get; set;}
     }
 }

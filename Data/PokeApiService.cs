@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using PokeApiNet;
 using PokeApiNet.Models;
+using TestBlazorApp.Models;
 
 namespace TestBlazorApp.Data
 {
@@ -12,13 +13,15 @@ namespace TestBlazorApp.Data
 
             Pokemon pkmn = await _pokeApiClient.GetResourceAsync<Pokemon>(pkmnName);
 
+            Pokedex dexInfo = await _pokeApiClient.GetResourceAsync<Pokedex>(pkmn.Id);
+
             PokeData pokeData = new PokeData
             {
                 DexEntry = pkmn.Id,
                 Name = pkmn.Name,
                 PkmnSprite = pkmn.Sprites.FrontDefault,
                 PkmnShinySprite = pkmn.Sprites.FrontShiny,
-
+                PkmnDesc = dexInfo.Descriptions
             };
 
             return pokeData;
