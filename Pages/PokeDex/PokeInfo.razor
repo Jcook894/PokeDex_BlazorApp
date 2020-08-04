@@ -1,20 +1,11 @@
 @using PokeApiNet.Models
 
-<p>I am a nested component, value below is passed from parent component above</p>
-<p>@Title</p>
-
 @ChildContent
-
-@if(@PokemonDesc != null )
-{
-    @foreach(var desc in @PokemonDesc)
-    {
-        <p>@desc.Language</p>
-    }
-}
 
 @code
 {
+    [Parameter] 
+    public int PokeDexEntry {get; set;}
     [Parameter]
     public string Title {get; set;}
     [Parameter]
@@ -22,4 +13,9 @@
     [Parameter]
     public RenderFragment ChildContent {get; set;}
     
+
+    protected override void OnInitialized() 
+    {
+        Console.WriteLine(this.Title, this.PokeDexEntry);
+    }
 }

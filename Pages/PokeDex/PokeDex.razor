@@ -11,9 +11,7 @@
 @if(currentPkmn == ""){
     <p>Loading PokeDex.....</p>
 } else{
-
-}
-<div class="container">
+    <div class="container">
     <div class="row">
         <div class="col-md">
             <div class="card">
@@ -60,10 +58,13 @@
     </div>
 </div>
 <!-- Nested Child component -->
-<IndexChild 
+<PokeInfo 
     Title="@currentPkmn"
     PokemonDesc="@pkmnInfo"
+    PokeDexEntry ="@dexEntry"
 />
+}
+
 
 @code{
     //TODO:
@@ -95,14 +96,13 @@
 
     protected async Task GetPokeData()
     {
-        var pkmnData =  await PokeApiService.GetPokemonData(currentPkmn);
+        var pkmnData =  await PokeApiService.GetPokeSprite(currentPkmn);
         //Pass service data into view.
         showingShiny = false;
         pkmnName = pkmnData.Name; 
         dexEntry = pkmnData.DexEntry;
         pkmnSprite = pkmnData.PkmnSprite;
         pkmnShinySprite = pkmnData.PkmnShinySprite;
-        pkmnInfo = pkmnData.PkmnDesc;
     }
 
     protected void ShowShinySprite()

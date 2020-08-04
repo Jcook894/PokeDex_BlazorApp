@@ -7,21 +7,18 @@ namespace TestBlazorApp.Data
 {
     public class PokeApiService
     {
-        public async Task<PokeData> GetPokemonData(string pkmnName)
+        public async Task<PokeSpriteData> GetPokeSprite(string pkmnName)
         {
             PokeApiClient _pokeApiClient = new PokeApiClient();
 
             Pokemon pkmn = await _pokeApiClient.GetResourceAsync<Pokemon>(pkmnName);
 
-            Pokedex dexInfo = await _pokeApiClient.GetResourceAsync<Pokedex>(pkmn.Id);
-
-            PokeData pokeData = new PokeData
+            PokeSpriteData pokeData = new PokeSpriteData
             {
                 DexEntry = pkmn.Id,
                 Name = pkmn.Name,
                 PkmnSprite = pkmn.Sprites.FrontDefault,
                 PkmnShinySprite = pkmn.Sprites.FrontShiny,
-                PkmnDesc = dexInfo.Descriptions
             };
 
             return pokeData;
