@@ -57,10 +57,11 @@
         </div>
     </div>
 </div>
+
 <!-- Nested Child component -->
 <PokeInfo 
     Title="@currentPkmn"
-    PokemonDesc="@pkmnInfo"
+    PokemonDesc= "@pkmnInfo"
     PokeDexEntry ="@dexEntry"
 />
 }
@@ -90,19 +91,21 @@
     //Look into diff life cycle hooks.
     protected override async Task OnInitializedAsync()
     {
-        currentPkmn = "squirtle";
+        currentPkmn = "Squirtle";
         await GetPokeData();
     }
 
     protected async Task GetPokeData()
     {
-        var pkmnData =  await PokeApiService.GetPokeSprite(currentPkmn);
+        var pkmnData =  await PokeApiService.GetPokemonData(currentPkmn);
         //Pass service data into view.
-        showingShiny = false;
-        pkmnName = pkmnData.Name; 
-        dexEntry = pkmnData.DexEntry;
-        pkmnSprite = pkmnData.PkmnSprite;
-        pkmnShinySprite = pkmnData.PkmnShinySprite;
+        this.showingShiny = false;
+        this.pkmnName = pkmnData.Name; 
+        this.dexEntry = pkmnData.DexEntry;
+        this.pkmnSprite = pkmnData.PkmnSprite;
+        this.pkmnShinySprite = pkmnData.PkmnShinySprite;
+        this.pkmnInfo = pkmnData.PokemonDescription;
+        Console.WriteLine("Poke Info for "+this.pkmnName+": ", this.pkmnInfo);
     }
 
     protected void ShowShinySprite()
