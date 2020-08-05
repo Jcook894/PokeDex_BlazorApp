@@ -15,7 +15,7 @@ namespace TestBlazorApp.Data
 
             Pokedex dexInfo = await _pokeApiClient.GetResourceAsync<Pokedex>(pkmn.Id);
             
-            PokeSpriteData pokeData = new PokeSpriteData
+            return new PokeSpriteData
             {
                 DexEntry = pkmn.Id,
                 Name = pkmn.Name,
@@ -23,8 +23,6 @@ namespace TestBlazorApp.Data
                 PkmnShinySprite = pkmn.Sprites.FrontShiny,
                 PokemonDescription = dexInfo.Descriptions,
             };
-
-            return pokeData;
         }
     }
 }

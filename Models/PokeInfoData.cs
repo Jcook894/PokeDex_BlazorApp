@@ -10,5 +10,4 @@ namespace TestBlazorApp.Models
         public string PkmnSprite {get; set;}
         public string PkmnShinySprite {get; set;}
     }
-
 }

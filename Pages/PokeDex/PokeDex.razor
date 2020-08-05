@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body" style="text-align: center;">
                     <!-- Change sprite -->
-                    <img src="@(@showingShiny == true ? @pkmnShinySprite: @pkmnSprite)"/>
+                    <img src=" @(@showingShiny == true ? @pkmnShinySprite : @pkmnSprite)" />
                 </div>
             </div>
         </div>
@@ -26,13 +26,13 @@
                 <label>
                     Pokemon Name: 
                 </label>
-                <p>@pkmnName</p>
+                <p> @pkmnName </p>
             </span>
             <span>
                 <label>
                     Dex Entry:
                 </label>
-                <p>@dexEntry</p>
+                <p> @dexEntry </p>
             </span>
         </div>
     </div>
@@ -46,14 +46,11 @@
         </div>
          <div class="col-md">
             <button class="btn btn-primary" @onclick="GetPokeData">Find Pokemon</button>
-            @if(@currentPkmn != "")
-            {
                 <button 
                     class="btn btn-success" 
-                    @onclick="ShowShinySprite">
-                    Show Shiny @currentPkmn 
-                </button>
-            }
+                    @onclick="@(e => ShowShinySprite(true))">
+                    @( @showingShiny ? "Show " + @currentPkmn : "Show Shiny " + @currentPkmn ) 
+                </button> 
         </div>
     </div>
 </div>
@@ -62,18 +59,20 @@
 <PokeInfo 
     Title="@currentPkmn"
     PokemonDesc= "@pkmnInfo"
-    PokeDexEntry ="@dexEntry"
-/>
+    PokeDexEntry ="@dexEntry" />
 }
 
 
 @code{
+
     //TODO:
     //Figure out better ways to set up global vars on component.
+
     [Parameter]
     public string pkmnName {get; set;} = "";
     [Parameter]
-    public string currentPkmn {get; set;} = "";
+    // Default to Squirtle.
+    public string currentPkmn {get; set;} = "Squirtle";
     [Parameter] 
     public int dexEntry {get; set;}
     [Parameter]
@@ -91,7 +90,6 @@
     //Look into diff life cycle hooks.
     protected override async Task OnInitializedAsync()
     {
-        currentPkmn = "Squirtle";
         await GetPokeData();
     }
 
@@ -104,13 +102,16 @@
         this.dexEntry = pkmnData.DexEntry;
         this.pkmnSprite = pkmnData.PkmnSprite;
         this.pkmnShinySprite = pkmnData.PkmnShinySprite;
-        this.pkmnInfo = pkmnData.PokemonDescription;
-        Console.WriteLine("Poke Info for "+this.pkmnName+": ", this.pkmnInfo);
+        @* this.pkmnInfo = pkmnData.PokemonDescription; *@
+        Console.WriteLine("Poke Info for "+this.pkmnName+": ", pkmnData.PokemonDescription);
     }
 
-    protected void ShowShinySprite()
+    protected void ShowShinySprite(bool isClicked)
     {
-        showingShiny = true;
+        if(showingShiny){
+            isClicked = false;
+        }
+        showingShiny = isClicked;
     }
 
 }
