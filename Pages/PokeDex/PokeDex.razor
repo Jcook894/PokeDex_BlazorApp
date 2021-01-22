@@ -45,10 +45,10 @@
             <input type="text" class="form-control" @bind="@currentPkmn"/>
         </div>
          <div class="col-md">
-            <button class="btn btn-primary" @onclick="GetPokeData">Find Pokemon</button>
+            <button class="btn btn-primary" @onclick="GetPokeData">Get PokeData</button>
                 <button 
                     class="btn btn-success" 
-                    @onclick="@(e => ShowShinySprite(true))">
+                    @onclick="@(e => ShowShinySprite(true))" >
                     @( @showingShiny ? "Show " + @currentPkmn : "Show Shiny " + @currentPkmn ) 
                 </button> 
         </div>
